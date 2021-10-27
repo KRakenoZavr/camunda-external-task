@@ -7,9 +7,13 @@ async function mailWorker({ task, taskService }) {
     const text = task.variables.get("_text");
     const photos = task.variables.get("_photos");
 
-    await sendMessage("send-email", {
-        to, subject, text, photos,
-    });
+    try {
+        await sendMessage("send-email", {
+            to, subject, text, photos,
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
     console.log("worker: message sent to kafka");
 
